@@ -1,3 +1,22 @@
+const storage = {
+  // Wrapper pequeno para centralizar leitura/escrita de sessionStorage.
+  get(key, fallback) {
+    try {
+      const value = window.sessionStorage.getItem(key);
+      return value ? JSON.parse(value) : fallback;
+    } catch {
+      return fallback;
+    }
+  },
+  set(key, value) {
+    try {
+      window.sessionStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      // Ignore storage write errors to keep the page functional.
+    }
+  },
+};
+
 function initSlider() {
   // Inicializa o slider simples de imagens usando translateX no track.
   const slider = document.querySelector("[data-slider]");
