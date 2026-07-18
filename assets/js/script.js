@@ -158,3 +158,100 @@ function initDiscursiveActivity() {
 
   render(state);
 }
+
+function initObjectiveActivity() {
+  // A atividade objetiva usa seleção única, mesmo mantendo checkboxes no HTML.
+  const activity = document.querySelector('[data-activity="objective"]');
+
+  if (!activity) {
+    return;
+  }
+
+  const checkboxes = Array.from(activity.querySelectorAll('input[type="checkbox"]'));
+  const labels = checkboxes.map((input) => input.closest(".option-card"));
+  const submitButton = activity.querySelector('[data-action="submit"]');
+  const editButton = activity.querySelector('[data-action="edit"]');
+  const feedback = activity.querySelector("[data-feedback]");
+  const storageKey = "edtech-objective";
+  const correctOption = "c";
+
+  function getCurrentValues() {
+    return checkboxes.filter((input) => input.checked).map((input) => input.value);
+  }
+
+  function render(state) {
+    // O feedback muda de estilo conforme a alternativa correta definida no script.
+    const hasSelection = state.selected.length > 0;
+    const isCorrect = state.selected.includes(correctOption);
+
+    checkboxes.forEach((input) => {
+      input.checked = state.selected.includes(input.value);
+      input.disabled = state.submitted;
+    });
+
+    labels.forEach((label) => {
+      const input = label.querySelector('input[type="checkbox"]');
+      label.classList.toggle("is-selected", input.checked);
+      label.classList.toggle("is-locked", state.submitted);
+    });
+
+    submitButton.disabled = state.submitted || !hasSelection;
+    submitButton.classList.toggle("button--dark", !state.submitted && hasSelection);
+    submitButton.classList.toggle("button--disabled", state.submitted || !hasSelection);
+    editButton.hidden = !state.submitted;
+    editButton.disabled = !state.submitted;
+    editButton.style.display = state.submitted ? "" : "none";
+    feedback.hidden = !state.submitted;
+    feedback.classList.toggle("feedback--success", state.submitted && isCorrect);
+    feedback.classList.toggle("feedback--warning", state.submitted && !isCorrect);
+    feedback.querySelector("strong").textContent = isCorrect
+      ? "É isso aí"
+      : "Tente novamente!";
+    feedback.querySelector("p").textContent = isCorrect
+      ? "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur commodi odio maiores accusamus aspernatur consequatur ipsam dignissimos magnam hic, velit est perferendis explicabo aperiam ratione veritatis labore."
+      : "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur commodi odio maiores accusamus aspernatur consequatur ipsam dignissimos magnam hic, velit est perferendis explicabo aperiam ratione veritatis labore.";
+  }
+
+  function save(nextState) {
+    storage.set(storageKey, nextState);
+    render(nextState);
+  }
+
+  const state = storage.get(storageKey, {
+    selected: [],
+    submitted: false,
+  });
+
+  checkboxes.forEach((input) => {
+    input.addEventListener("change", () => {
+      if (input.checked) {
+        checkboxes.forEach((otherInput) => {
+          if (otherInput !== input) {
+            otherInput.checked = false;
+          }
+        });
+      }
+
+      save({
+        selected: getCurrentValues(),
+        submitted: false,
+      });
+    });
+  });
+
+  submitButton.addEventListener("click", () => {
+    save({
+      selected: getCurrentValues(),
+      submitted: true,
+    });
+  });
+
+  editButton.addEventListener("click", () => {
+    save({
+      selected: getCurrentValues(),
+      submitted: false,
+    });
+  });
+
+  render(state);
+}
