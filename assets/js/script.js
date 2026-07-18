@@ -329,3 +329,97 @@ function initFaq() {
     });
   });
 }
+
+function initAudioPlayer() {
+  // O player customizado usa a tag <audio> real, mas desenha os controles manualmente.
+  const player = document.querySelector("[data-audio-player]");
+
+  if (!player) {
+    return;
+  }
+
+  const audio = player.querySelector("audio");
+  const toggleButton = player.querySelector('[data-audio-action="toggle"]');
+  const muteButton = player.querySelector('[data-audio-action="mute"]');
+  const progress = player.querySelector("[data-audio-progress]");
+  const volume = player.querySelector("[data-audio-volume]");
+  const time = player.querySelector("[data-audio-time]");
+
+  function formatTime(totalSeconds) {
+    const safeSeconds = Number.isFinite(totalSeconds) ? Math.floor(totalSeconds) : 0;
+    const minutes = String(Math.floor(safeSeconds / 60)).padStart(2, "0");
+    const seconds = String(safeSeconds % 60).padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  }
+
+  function updateRangeFill(input, value, max) {
+    // Atualiza a trilha visual dos ranges via CSS custom property.
+    const percentage = max > 0 ? (value / max) * 100 : 0;
+    input.style.setProperty("--range-progress", `${percentage}%`);
+  }
+
+  function syncProgress() {
+    const duration = Number.isFinite(audio.duration) ? audio.duration : 0;
+    progress.max = duration || 100;
+    progress.value = String(audio.currentTime);
+    updateRangeFill(progress, audio.currentTime, duration || 100);
+    time.textContent = formatTime(audio.currentTime);
+  }
+
+  function syncVolume() {
+    const effectiveVolume = audio.muted ? 0 : audio.volume;
+    volume.value = String(audio.volume);
+    updateRangeFill(volume, effectiveVolume, 1);
+    muteButton.setAttribute(
+      "aria-label",
+      effectiveVolume === 0 ? "Ativar volume" : "Desativar volume"
+    );
+  }
+
+  toggleButton.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      return;
+    }
+
+    audio.pause();
+  });
+
+  muteButton.addEventListener("click", () => {
+    audio.muted = !audio.muted;
+    syncVolume();
+  });
+
+  progress.addEventListener("input", () => {
+    audio.currentTime = Number(progress.value);
+    syncProgress();
+  });
+
+  volume.addEventListener("input", () => {
+    audio.volume = Number(volume.value);
+    audio.muted = audio.volume === 0;
+    syncVolume();
+  });
+
+  audio.addEventListener("play", () => {
+    player.classList.add("is-playing");
+    toggleButton.setAttribute("aria-label", "Pausar áudio");
+  });
+
+  audio.addEventListener("pause", () => {
+    player.classList.remove("is-playing");
+    toggleButton.setAttribute("aria-label", "Reproduzir áudio");
+  });
+
+  audio.addEventListener("loadedmetadata", syncProgress);
+  audio.addEventListener("timeupdate", syncProgress);
+  audio.addEventListener("volumechange", syncVolume);
+  audio.addEventListener("ended", () => {
+    player.classList.remove("is-playing");
+    toggleButton.setAttribute("aria-label", "Reproduzir áudio");
+  });
+
+  audio.volume = Number(volume.value);
+  syncProgress();
+  syncVolume();
+}
