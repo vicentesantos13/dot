@@ -58,6 +58,44 @@ a {
   margin: 0 auto;
 }
 
+.container--narrow {
+  width: min(calc(100% - 32px), 860px);
+  max-width: 784px;
+}
+
+.section {
+  padding: 4rem 2rem 0;
+  max-width: 1024px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section-heading {
+  margin-bottom: 28px;
+}
+
+.section-heading h2 {
+  margin: 0 0 10px;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 800;
+  width: 100%;
+}
+
+.section-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.125rem;
+}
+
+.section-heading--centered {
+  text-align: center;
+}
+
+.section-heading--centered p {
+  margin-inline: auto;
+}
+
 .hero {
   /* O hero já foi calibrado manualmente e não deve ser mexido junto com o restante da responsividade. */
   position: relative;
@@ -682,15 +720,14 @@ a {
   align-items: flex-start;
   margin-bottom: 18px;
 }
-.activity__icon{
+.activity__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #76B9001A;
+  background-color: #76b9001a;
   border-radius: 100%;
   width: 40px;
   height: 40px;
-  
 }
 
 .activity__icon-image {
@@ -707,8 +744,6 @@ a {
 .activity[data-activity="objective"] .activity__badge {
   display: none;
 }
-
-
 
 .activity__header h3 {
   margin: 0 0 4px;
@@ -740,8 +775,6 @@ textarea:disabled {
   background: #fafafa;
   color: var(--muted);
 }
-
-
 
 .activity__actions {
   display: flex;
@@ -781,4 +814,37 @@ textarea:disabled {
   background: var(--warning-bg);
   border-color: var(--warning-border);
   color: #8a6420;
+}
+.objective-options {
+  display: grid;
+  gap: 10px;
+}
+
+.option-card {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.option-card input {
+  margin-top: 3px;
+}
+
+.option-card.is-selected {
+  /* O estado selecionado simula o cartão escuro do layout de referência. */
+  background: #111111;
+  border-color: #111111;
+  color: #ffffff;
+}
+
+.option-card.is-locked {
+  cursor: default;
 }

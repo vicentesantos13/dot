@@ -376,6 +376,93 @@
           </article>
         </div>
       </section>
+      <!-- Atividade objetiva com seleção única e feedback por acerto/erro. -->
+      <section class="section section--compact">
+        <article class="activity" data-activity="objective">
+          <div class="activity__header">
+            <div class="activity__icon" aria-hidden="true">
+              <img
+                class="activity__icon-image"
+                src="./assets/images/Icon2.png"
+                alt=""
+                aria-hidden="true"
+              />
+            </div>
+            <span
+              class="activity__badge activity__badge--square"
+              aria-hidden="true"
+              >▣</span
+            >
+            <div>
+              <h3>Atividade Objetiva</h3>
+              <p>
+                It is a long established fact that a reader will be distracted
+                by the readable content of a page.
+              </p>
+            </div>
+          </div>
+
+          <div class="objective-options" role="group" aria-label="Alternativas">
+            <label class="option-card">
+              <input type="checkbox" name="objective" value="a" />
+              <span
+                >A) Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry.</span
+              >
+            </label>
+            <label class="option-card">
+              <input type="checkbox" name="objective" value="b" />
+              <span
+                >B) Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry.</span
+              >
+            </label>
+            <label class="option-card">
+              <input type="checkbox" name="objective" value="c" />
+              <span
+                >C) Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry.</span
+              >
+            </label>
+            <label class="option-card">
+              <input type="checkbox" name="objective" value="d" />
+              <span
+                >D) Lorem Ipsum is simply dummy text of the printing and
+                typesetting industry.</span
+              >
+            </label>
+          </div>
+
+          <div class="activity__actions">
+            <button
+              class="button button--disabled"
+              type="button"
+              data-action="submit"
+              disabled
+            >
+              Responder
+            </button>
+            <button
+              class="button button--dark"
+              type="button"
+              data-action="edit"
+              hidden
+            >
+              Alterar
+            </button>
+          </div>
+
+          <div class="feedback feedback--warning" data-feedback hidden>
+            <strong>Tente novamente!</strong>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur
+              commodi odio maiores accusamus aspernatur consequatur ipsam
+              dignissimos magnam hic, velit est perferendis explicabo aperiam
+              ratione veritatis labore.
+            </p>
+          </div>
+        </article>
+      </section>
     </main>
   </body>
 </html>
