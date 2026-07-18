@@ -53,7 +53,10 @@ function initSlider() {
 
     dots.forEach((dot, dotIndex) => {
       dot.classList.toggle("is-active", dotIndex === currentIndex);
-      dot.setAttribute("aria-current", dotIndex === currentIndex ? "true" : "false");
+      dot.setAttribute(
+        "aria-current",
+        dotIndex === currentIndex ? "true" : "false",
+      );
     });
 
     prevButton.disabled = currentIndex === 0;
@@ -115,8 +118,14 @@ function initDiscursiveActivity() {
     textarea.value = state.answer;
     textarea.disabled = state.submitted;
     submitButton.disabled = state.submitted || !hasAnswer;
-    submitButton.classList.toggle("button--dark", !state.submitted && hasAnswer);
-    submitButton.classList.toggle("button--disabled", state.submitted || !hasAnswer);
+    submitButton.classList.toggle(
+      "button--dark",
+      !state.submitted && hasAnswer,
+    );
+    submitButton.classList.toggle(
+      "button--disabled",
+      state.submitted || !hasAnswer,
+    );
     editButton.hidden = !state.submitted;
     editButton.disabled = !state.submitted;
     editButton.style.display = state.submitted ? "" : "none";
@@ -167,7 +176,9 @@ function initObjectiveActivity() {
     return;
   }
 
-  const checkboxes = Array.from(activity.querySelectorAll('input[type="checkbox"]'));
+  const checkboxes = Array.from(
+    activity.querySelectorAll('input[type="checkbox"]'),
+  );
   const labels = checkboxes.map((input) => input.closest(".option-card"));
   const submitButton = activity.querySelector('[data-action="submit"]');
   const editButton = activity.querySelector('[data-action="edit"]');
@@ -176,7 +187,9 @@ function initObjectiveActivity() {
   const correctOption = "c";
 
   function getCurrentValues() {
-    return checkboxes.filter((input) => input.checked).map((input) => input.value);
+    return checkboxes
+      .filter((input) => input.checked)
+      .map((input) => input.value);
   }
 
   function render(state) {
@@ -196,14 +209,26 @@ function initObjectiveActivity() {
     });
 
     submitButton.disabled = state.submitted || !hasSelection;
-    submitButton.classList.toggle("button--dark", !state.submitted && hasSelection);
-    submitButton.classList.toggle("button--disabled", state.submitted || !hasSelection);
+    submitButton.classList.toggle(
+      "button--dark",
+      !state.submitted && hasSelection,
+    );
+    submitButton.classList.toggle(
+      "button--disabled",
+      state.submitted || !hasSelection,
+    );
     editButton.hidden = !state.submitted;
     editButton.disabled = !state.submitted;
     editButton.style.display = state.submitted ? "" : "none";
     feedback.hidden = !state.submitted;
-    feedback.classList.toggle("feedback--success", state.submitted && isCorrect);
-    feedback.classList.toggle("feedback--warning", state.submitted && !isCorrect);
+    feedback.classList.toggle(
+      "feedback--success",
+      state.submitted && isCorrect,
+    );
+    feedback.classList.toggle(
+      "feedback--warning",
+      state.submitted && !isCorrect,
+    );
     feedback.querySelector("strong").textContent = isCorrect
       ? "É isso aí"
       : "Tente novamente!";
@@ -346,7 +371,9 @@ function initAudioPlayer() {
   const time = player.querySelector("[data-audio-time]");
 
   function formatTime(totalSeconds) {
-    const safeSeconds = Number.isFinite(totalSeconds) ? Math.floor(totalSeconds) : 0;
+    const safeSeconds = Number.isFinite(totalSeconds)
+      ? Math.floor(totalSeconds)
+      : 0;
     const minutes = String(Math.floor(safeSeconds / 60)).padStart(2, "0");
     const seconds = String(safeSeconds % 60).padStart(2, "0");
     return `${minutes}:${seconds}`;
@@ -372,7 +399,7 @@ function initAudioPlayer() {
     updateRangeFill(volume, effectiveVolume, 1);
     muteButton.setAttribute(
       "aria-label",
-      effectiveVolume === 0 ? "Ativar volume" : "Desativar volume"
+      effectiveVolume === 0 ? "Ativar volume" : "Desativar volume",
     );
   }
 
@@ -423,3 +450,10 @@ function initAudioPlayer() {
   syncProgress();
   syncVolume();
 }
+
+initSlider();
+initExpandableCards();
+initAudioPlayer();
+initDiscursiveActivity();
+initObjectiveActivity();
+initFaq();
