@@ -314,6 +314,68 @@
           </div>
         </div>
       </section>
+      <!-- Atividade discursiva com persistência em sessionStorage. -->
+      <section class="section section--compact">
+        <div class=" ">
+          <article class="activity" data-activity="discursive">
+            <div class="activity__header">
+              <div class="activity__icon" aria-hidden="true">
+                <img
+                  class="activity__icon-image"
+                  src="./assets/images/icon.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </div>
+              <div>
+                <h3>Atividade discursiva</h3>
+                <p>
+                  It is a long established fact that a reader will be distracted
+                  by the readable content of a page when looking at its layout.
+                </p>
+              </div>
+            </div>
+
+            <label class="sr-only" for="discursive-answer"
+              >Digite sua resposta</label
+            >
+            <textarea
+              id="discursive-answer"
+              data-field="answer"
+              rows="5"
+              placeholder="Digite sua resposta aqui..."
+            ></textarea>
+
+            <div class="activity__actions">
+              <button
+                class="button button--dark"
+                type="button"
+                data-action="submit"
+              >
+                Responder
+              </button>
+              <button
+                class="button button--dark"
+                type="button"
+                data-action="edit"
+                hidden
+              >
+                Alterar
+              </button>
+            </div>
+
+            <div class="feedback feedback--success" data-feedback hidden>
+              <strong>É isso aí</strong>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                Pariatur commodi odio maiores accusamus aspernatur consequatur
+                ipsam dignissimos magnam hic, velit est perferendis explicabo
+                aperiam ratione veritatis labore.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
   </body>
 </html>
