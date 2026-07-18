@@ -255,3 +255,77 @@ function initObjectiveActivity() {
 
   render(state);
 }
+
+function initFaq() {
+  // O FAQ combina <details> com animação manual para abrir e fechar suavemente.
+  const items = Array.from(document.querySelectorAll(".faq__item"));
+
+  function animateOpen(item) {
+    // Mede a altura real do conteúdo para evitar saltos na abertura.
+    const content = item.querySelector(".faq__content");
+
+    item.open = true;
+    content.style.height = "0px";
+
+    requestAnimationFrame(() => {
+      content.style.height = `${content.scrollHeight}px`;
+    });
+
+    const onEnd = (event) => {
+      if (event.propertyName !== "height") {
+        return;
+      }
+
+      content.style.height = "auto";
+      content.removeEventListener("transitionend", onEnd);
+    };
+
+    content.addEventListener("transitionend", onEnd);
+  }
+
+  function animateClose(item) {
+    // Fecha animando da altura atual até zero antes de remover o atributo open.
+    const content = item.querySelector(".faq__content");
+
+    content.style.height = `${content.scrollHeight}px`;
+
+    requestAnimationFrame(() => {
+      content.style.height = "0px";
+    });
+
+    const onEnd = (event) => {
+      if (event.propertyName !== "height") {
+        return;
+      }
+
+      item.open = false;
+      content.removeEventListener("transitionend", onEnd);
+    };
+
+    content.addEventListener("transitionend", onEnd);
+  }
+
+  items.forEach((item) => {
+    const summary = item.querySelector("summary");
+    const content = item.querySelector(".faq__content");
+
+    content.style.height = item.open ? "auto" : "0px";
+
+    summary.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      if (item.open) {
+        animateClose(item);
+        return;
+      }
+
+      items.forEach((otherItem) => {
+        if (otherItem !== item && otherItem.open) {
+          animateClose(otherItem);
+        }
+      });
+
+      animateOpen(item);
+    });
+  });
+}
