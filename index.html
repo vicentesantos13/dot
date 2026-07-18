@@ -42,5 +42,109 @@
         <div class="hero-visual" aria-hidden="true"></div>
       </div>
     </header>
+    <main id="conteudo">
+      <!-- Bloco de vídeo introdutório com embed responsivo do YouTube. -->
+      <section class="section">
+        <div class="section-heading">
+          <h2>Lorem ipsum dolor, sit amet consectetur adipisicing elit</h2>
+          <p>
+            It is a long established fact that a reader will be distracted by
+            the readable content of a page when looking at its layout.
+          </p>
+        </div>
+
+        <div class="video-frame">
+          <div class="video-frame__inner">
+            <iframe
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+              title="Vídeo de apresentação"
+              loading="lazy"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+                web-share;
+              "
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+      <!-- Bloco de imagem + texto em duas colunas. -->
+      <section class="section section--compact">
+        <article class="media-card">
+          <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+            alt="Onda do mar"
+          />
+          <div class="media-card__copy">
+            <p>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit
+              voluptatum voluptatibus aperiam cum quasi repudiandae nostrum, sed
+              amet quam maiores eum consectetur ipsa dolores quis ducimus, iusto
+              dicta consequuntur facere!
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Molestiae, quia! Cumque ipsum harum fuga perferendis autem
+              incidunt dolorem voluptatum illo, quis explicabo. Possimus
+              repudiandae dolore architecto, hic dolorum ab.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Slider simples controlado via JavaScript vanilla. -->
+      <section class="section section--compact">
+        <div class="slider" data-slider>
+          <div class="slider__viewport">
+            <div class="slider__track">
+              <figure class="slider__slide is-active">
+                <img
+                  src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80"
+                  alt="Estrada entre árvores"
+                />
+              </figure>
+              <figure class="slider__slide">
+                <img
+                  src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80"
+                  alt="Montanhas com neblina"
+                />
+              </figure>
+              <figure class="slider__slide">
+                <img
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80"
+                  alt="Lago entre montanhas"
+                />
+              </figure>
+            </div>
+          </div>
+
+          <div class="slider__controls">
+            <button
+              class="slider__arrow"
+              type="button"
+              data-action="prev"
+              aria-label="Imagem anterior"
+            >
+              &#8249;
+            </button>
+            <div class="slider__dots" aria-label="Seleção de slide"></div>
+            <button
+              class="slider__arrow"
+              type="button"
+              data-action="next"
+              aria-label="Próxima imagem"
+            >
+              &#8250;
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
