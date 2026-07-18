@@ -55,3 +55,23 @@ function initSlider() {
 
   updateSlider(0);
 }
+
+function initExpandableCards() {
+  // Faz o toggle visual dos cards expansíveis sem estado global.
+  const grid = document.querySelector("[data-expandables]");
+
+  if (!grid) {
+    return;
+  }
+
+  grid.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-toggle-card]");
+
+    if (!button) {
+      return;
+    }
+
+    const card = button.closest(".expandable-card");
+    card.classList.toggle("is-open");
+  });
+}
