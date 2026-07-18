@@ -94,3 +94,67 @@ function initExpandableCards() {
     card.classList.toggle("is-open");
   });
 }
+
+function initDiscursiveActivity() {
+  // Persiste texto, estados dos botões e feedback da atividade discursiva.
+  const activity = document.querySelector('[data-activity="discursive"]');
+
+  if (!activity) {
+    return;
+  }
+
+  const textarea = activity.querySelector('[data-field="answer"]');
+  const submitButton = activity.querySelector('[data-action="submit"]');
+  const editButton = activity.querySelector('[data-action="edit"]');
+  const feedback = activity.querySelector("[data-feedback]");
+  const storageKey = "edtech-discursive";
+
+  function render(state) {
+    // A UI sempre é derivada do estado persistido, evitando inconsistência visual.
+    const hasAnswer = state.answer.trim().length > 0;
+    textarea.value = state.answer;
+    textarea.disabled = state.submitted;
+    submitButton.disabled = state.submitted || !hasAnswer;
+    submitButton.classList.toggle("button--dark", !state.submitted && hasAnswer);
+    submitButton.classList.toggle("button--disabled", state.submitted || !hasAnswer);
+    editButton.hidden = !state.submitted;
+    editButton.disabled = !state.submitted;
+    editButton.style.display = state.submitted ? "" : "none";
+    feedback.hidden = !state.submitted;
+  }
+
+  function save(nextState) {
+    storage.set(storageKey, nextState);
+    render(nextState);
+  }
+
+  const state = storage.get(storageKey, {
+    answer: "",
+    submitted: false,
+  });
+
+  textarea.addEventListener("input", () => {
+    const nextState = {
+      ...storage.get(storageKey, state),
+      answer: textarea.value,
+      submitted: false,
+    };
+    save(nextState);
+  });
+
+  submitButton.addEventListener("click", () => {
+    save({
+      answer: textarea.value,
+      submitted: true,
+    });
+  });
+
+  editButton.addEventListener("click", () => {
+    save({
+      answer: textarea.value,
+      submitted: false,
+    });
+  });
+
+  render(state);
+}
